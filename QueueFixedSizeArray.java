@@ -2,36 +2,49 @@
 
 public class QueueFixedSizeArray {
 
-	private static final int CAPACITY = 5;
+		private static final int CAPACITY = 5;
 	private Integer[] list;
 	private int size = 0;
-	private int head = -1;
-	private int tail = -1;
+	private int head = 0;
+	private int tail = 0;
 
 	public QueueFixedSizeArray() {
 		list = new Integer[CAPACITY];
 	}
 
 	public void enqueue(int value) {
-		if (size == CAPACITY) {
-			System.err.println("Queue is full.");
+		if (tail == CAPACITY) {
+			System.err.println("Queue is full can't add new elements");
 		} else {
-			tail++;
-			list[tail] = value;
-			size++;
-			if (tail == 0) {
-				head = 0;
+			if (null == list[tail]) {
+				list[tail] = value;
+				tail++;
+				size++;
+
+				if (tail == CAPACITY) {
+					tail = 0;
+				}
 			}
+
 		}
 	}
 
+	public int getSize() {
+		return size;
+	}
+
 	public void dequeue() {
-		if (head == -1 || head>=list.length) {
-			System.err.println("Queue is empty");
+		if (head == -1 || head >= list.length) {
+			System.err.println("Queue is already empty");
 		} else {
-			size--;
-			list[head] = null;
-			head++;
+			if (null != list[head]) {
+				size--;
+				list[head] = null;
+				head++;
+				if (head == list.length) {
+					head = 0;
+				}
+			}
 		}
 	}
 
@@ -49,9 +62,11 @@ public class QueueFixedSizeArray {
 		queueFixedSizeArray.dequeue();
 		queueFixedSizeArray.dequeue();
 		queueFixedSizeArray.dequeue();
+		queueFixedSizeArray.enqueue(6);
+		queueFixedSizeArray.enqueue(7);
 		queueFixedSizeArray.dequeue();
 		queueFixedSizeArray.dequeue();
-		
+
 	}
 
 }
